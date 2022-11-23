@@ -3,6 +3,7 @@
  */
 
 const fs = require("fs");
+require("jest-fetch-mock").enableMocks();
 
 const NotesModel = require("./notesModel");
 const NotesView = require("./notesView");
@@ -45,7 +46,7 @@ describe("Notes view", () => {
     );
   });
 
-  it("removes the older notes", () => {
+  it("removes the older notes before displaying new notes", () => {
     document.body.innerHTML = fs.readFileSync("./index.html");
 
     const model = new NotesModel();
@@ -57,5 +58,40 @@ describe("Notes view", () => {
     view.displayNotes();
 
     expect(document.querySelectorAll("div.note").length).toEqual(2);
+  });
+
+  it("clears the input after clicking the button", () => {
+    document.body.innerHTML = fs.readFileSync("./index.html");
+
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    const input = document.querySelector("#add-note-input");
+    input.value = "My new amazing test note";
+
+    const button = document.querySelector("#add-note-button");
+    button.click();
+
+    expect(document.querySelectorAll("#add-note-input").value).toEqual();
+  });
+
+  // NOT WORKING YET!!!!
+  xit("displays a note from the api", (done) => {
+    document.body.innerHTML = fs.readFileSync("./index.html");
+    const model = new NotesModel();
+
+    const fakeNotesClient = {
+      loadNotes: (callback) => {
+        callback(["APInote"]);
+      },
+    };
+
+    const view = new NotesView(model, fakeNotesClient);
+
+    view.displayNotesFromApi();
+
+    expect(document.querySelectorAll("div.note").length).toEqual(1);
+    expect(document.querySelectorAll("div.note").textContent).toEqual("APInote"); // RETURNS UNDEFINED
+    done() 
   });
 });
