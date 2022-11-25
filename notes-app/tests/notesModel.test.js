@@ -1,24 +1,29 @@
-const NotesModel = require("./notesModel");
+const NotesModel = require("../src/notesModel");
 
-beforeEach(() => {
+let model;
+
+beforeEach(() => { // sets the model before each test
   model = new NotesModel();
 });
 
-describe("notesModel", () => {
-  it("returns an array of notes", () => {
+describe("NotesModel", () => {
+  it("returns the array of notes", () => {
+    expect(model.getNotes().length).toEqual(0);
     expect(model.getNotes()).toEqual([]);
   });
 
-  it("adds a todo to the array", () => {
+  it("adds a note to the array", () => {
     model.addNote("Buy milk");
     model.addNote("Go to the gym");
+    expect(model.getNotes().length).toEqual(2);
     expect(model.getNotes()).toEqual(["Buy milk", "Go to the gym"]);
   });
 
-  it("resets the array", () => {
+  it("resets the array and clears it", () => {
     model.addNote("Buy milk");
     model.addNote("Go to the gym");
     model.reset();
+    expect(model.getNotes().length).toEqual(0);
     expect(model.getNotes()).toEqual([]);
   });
 });

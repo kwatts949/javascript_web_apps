@@ -1,28 +1,22 @@
 class NotesModel {
   constructor() {
-    this.notes = [];
+    this.notesArray = [];
+  }
+
+  addNote(note) {
+    this.notesArray.push(note);
   }
 
   getNotes() {
-    //returns notes array
-    return this.notes;
-  }
-
-  addNote(todo) {
-    //pushes a todo into the notes array
-    this.notes.push(todo);
+    return this.notesArray;
   }
 
   reset() {
-    // resets the array to empty
-    this.notes = [];
+    this.notesArray = [];
   }
 
   setNotes(notes) {
-    // accepts an array of notes and passes each note not addNote
-    notes.forEach((note) => {
-      this.addNote(note);
-    });
+    this.notesArray = notes;
   }
 }
 

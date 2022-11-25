@@ -1,14 +1,14 @@
-const NotesClient = require("./notesClient");
+const Client = require("../src/notesClient");
 
 // This makes `fetch` available to our test
 // (it is not by default, as normally `fetch` is only
 // available within the browser)
 require("jest-fetch-mock").enableMocks();
 
-describe("NotesClient class", () => {
+describe("Client class", () => {
   it("calls fetch and loads data", (done) => {
     // 1. Instantiate the class
-    const client = new NotesClient();
+    const client = new Client();
 
     // 2. We mock the response from `fetch`
     // The mocked result will depend on what your API

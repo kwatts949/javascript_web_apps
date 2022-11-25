@@ -2,35 +2,33 @@ class NotesView {
   constructor(model, client) {
     this.model = model;
     this.client = client;
+
     this.mainContainerEl = document.querySelector("#main-container");
 
     document.querySelector("#add-note-button").addEventListener("click", () => {
       const newNote = document.querySelector("#add-note-input").value;
+      this.client.createNote(newNote);
       this.addNewNote(newNote);
-      document.querySelector("#add-note-input").value = "";
+    });
+
+    document.querySelector("#reset-note-button").addEventListener("click", () => {
+      this.client.resetNotes();
     });
   }
 
   displayNotes() {
-    // remove all instances of note class
-    document.querySelectorAll(".note").forEach((note) => note.remove());
+    const removeNote = document.querySelectorAll(".note");
+    removeNote.forEach((note) => {
+      note.remove();
+    }); // removes previous note at start
 
-    const notes = this.model.getNotes();
-
-    // For each note, create and append a new element on the main container
-    notes.forEach((note) => {
-      const newNote = document.createElement("div");
-      newNote.textContent = note;
-      newNote.className = "note";
-      console.log(newNote.textContent);
-      this.mainContainerEl.append(newNote); // make sure to add div container in html file
+    const notesList = this.model.getNotes(); // gets array of notes
+    notesList.forEach((note) => {
+      const noteEl = document.createElement("div"); // creates a div for each note
+      noteEl.textContent = note; // sets text to note content
+      noteEl.className = "note"; // sets class
+      this.mainContainerEl.append(noteEl); // appends div to main container in HTML
     });
-  }
-
-  addNewNote(newNote) {
-    // adds a new note to the list and displays it on the browser
-    this.model.addNote(newNote);
-    this.displayNotes();
   }
 
   displayNotesFromApi() {
@@ -39,10 +37,19 @@ class NotesView {
       this.displayNotes();
     });
   }
-  /*
-  call loadNotes(callback) on the Client class.
-when the response data is received, set the list of notes on the model and call displayNotes():
-*/
+
+  addNewNote(newNote) {
+    this.model.addNote(newNote);
+    this.displayNotes();
+    document.querySelector("#add-note-input").value = ""; // reset the input field
+  }
+
+  displayError() {
+    const errorMsg = document.createElement("div");
+    errorMsg.textContent = "Oops, something went wrong!";
+    errorMsg.className = "error";
+    this.mainContainerEl.append(errorMsg);
+  } 
 }
 
 module.exports = NotesView;
