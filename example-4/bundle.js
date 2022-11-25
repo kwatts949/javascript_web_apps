@@ -1,7 +1,6 @@
 (() => {
-  var __getOwnPropNames = Object.getOwnPropertyNames;
   var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+    return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
   // githubClient.js
@@ -53,18 +52,12 @@
             });
           });
         }
-        display(repo) {
-          document.querySelectorAll("h3").forEach((h3) => h3.remove());
-          document.querySelectorAll("p").forEach((p) => p.remove());
+        display(repoData) {
           document.querySelectorAll("img").forEach((img) => img.remove());
-          const repoName = document.createElement("h3");
-          repoName.innerText = repo["name"];
-          document.querySelector("body").append(repoName);
-          const repoDescription = document.createElement("p");
-          repoDescription.innerText = repo["description"];
-          document.querySelector("body").append(repoDescription);
+          document.querySelector("#repo-name").textContent = repoData.name;
+          document.querySelector("#repo-description").textContent = repoData.description;
           const repoImg = document.createElement("img");
-          repoImg.src = repo["organization"]["avatar_url"];
+          repoImg.src = repoData["organization"]["avatar_url"];
           document.querySelector("body").append(repoImg);
         }
       };
