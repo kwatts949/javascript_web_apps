@@ -10,21 +10,18 @@ describe("Page view", () => {
     document.body.innerHTML = fs.readFileSync("./index.html");
 
     const view = new View();
-
     expect(document.querySelectorAll("p").length).toBe(2);
   });
 
-  it("adds a new paragraph dynamically", () => {
+  it("dynamically adds a paragraph", () => {
     document.body.innerHTML = fs.readFileSync("./index.html");
-
     const view = new View();
     view.addParagraph();
     expect(document.querySelectorAll("p").length).toBe(3);
   });
 
-  it("removes all paragraphs", () => {
+  it("clears all the paragraphs", () => {
     document.body.innerHTML = fs.readFileSync("./index.html");
-
     const view = new View();
     view.clearParagraphs();
     expect(document.querySelectorAll("p").length).toBe(0);

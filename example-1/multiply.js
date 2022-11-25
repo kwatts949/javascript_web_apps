@@ -1,5 +1,5 @@
-const multiply = (a, b) => {
-  return a * b;
+const multiply = (x, y) => {
+  return x * y;
 };
 
 module.exports = multiply;

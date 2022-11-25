@@ -15,25 +15,18 @@ class MessageView {
 
   displayMessage() {
     console.log("Thanks for clicking me!");
-    const checkMessage = document.querySelector("#message-input").value;
+    const message = document.querySelector("#message-input").value;
 
-    console.log(checkMessage);
+    const messageElement = document.createElement("div");
+    messageElement.id = "message";
+    messageElement.textContent = message;
 
-    const message = document.createElement("div");
-    message.id = "message";
-    message.innerText = checkMessage;
-
-    document.querySelector("#main-container").append(message);
+    document.querySelector("#main-container").append(messageElement);
   }
 
   hideMessage() {
-    console.log("Hiding messages");
-
-    const messages = document.querySelectorAll("#message");
-
-    messages.forEach((message) => {
-      message.remove();
-    });
+    console.log("Message hidden");
+    const messageElement = document.querySelector("#message").remove();
   }
 }
 
